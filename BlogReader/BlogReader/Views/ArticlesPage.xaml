@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlogReader.Views.ArticlesPage"
+             NavigationPage.IconColor="Black"
+             xmlns:models="clr-namespace:BlogReader.Models"
+             x:DataType="viewmodels:ArticlesPageViewModel" xmlns:viewmodels="clr-namespace:BlogReader.ViewModels" BackgroundColor="White"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:converters="clr-namespace:BlogReader.Converters">
+    <ContentPage.BindingContext>
+        <viewmodels:ArticlesPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="InvertedBool"/>
+            <xct:BoolToObjectConverter x:Key="BoolToObject" TrueObject="#5BACDA" FalseObject="White"/>
+            <converters:DateTimeFormatConverter x:Key="DateTimeConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{xct:Translate ArticlesPageTitle}" FontFamily="Momcake" FontSize="Title" TextColor="Black"
+                   VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Margin="20, 0"/>
+                <Label Text="&#xf013;" TextColor="Black" FontFamily="FASolid" VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="EndAndExpand" Margin="0, 0, 10, 0" FontSize="20">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SettingsButton}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+            <SearchBar Placeholder="{xct:Translate SearchBarText}" CancelButtonColor="Black" PlaceholderColor="Black" TextColor="Black" x:Name="searchBar"
+                       FontSize="Medium" SearchCommand="{Binding PerformSearch}" SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
+                       IsVisible="{Binding IsRefreshing, Converter={StaticResource InvertedBool}}"/>
+            <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshArticles}" RefreshColor="{StaticResource PrimaryColor}"
+                         IsVisible="{Binding IsRefreshing, Converter={StaticResource InvertedBool}}">
+                <CollectionView ItemsSource="{Binding Articles}" x:Name="ArticlesCollection" SelectionMode="Single" VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="CenterAndExpand">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Articles">
+                            <StackLayout>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.ReadArticle, Source={x:Reference ArticlesCollection}}" CommandParameter="{Binding .}"/>
+                                </StackLayout.GestureRecognizers>
+                                <Frame HeightRequest="280" BackgroundColor="White" Padding="0" HasShadow="True" Margin="10" CornerRadius="30" 
+                                   HorizontalOptions="CenterAndExpand">
+                                    <Grid>
+                                        <StackLayout BackgroundColor="Black">
+                                            <Image Source="{Binding ImageURL}" HeightRequest="350" Opacity="0.65" Aspect="AspectFill"/>
+                                        </StackLayout>
+                                        <StackLayout>
+                                            <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="15" VerticalOptions="EndAndExpand"/>
+                                            <Label Text="{Binding PublishDate, Converter={StaticResource DateTimeConverter}}" TextColor="White" FontSize="10" FontAttributes="Bold" 
+                                                   Margin="15" VerticalOptions="EndAndExpand"/>
+                                        </StackLayout>
+                                        <Label Text="&#xf0c7;" HorizontalOptions="EndAndExpand" 
+                                               VerticalOptions="StartAndExpand" TextColor="{Binding ForOffline, Converter={StaticResource BoolToObject}}" 
+                                               FontAttributes="Bold"
+                                               Margin="0, 15, 15, 0" FontFamily="FASolid" FontSize="20">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BindingContext.SaveArticle, Source={x:Reference ArticlesCollection}}" 
+                                                                      CommandParameter="{Binding .}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label Text="&#xf005;" HorizontalOptions="EndAndExpand" 
+                                               VerticalOptions="StartAndExpand" TextColor="{Binding Favorite, Converter={StaticResource BoolToObject}}" 
+                                               FontAttributes="Bold"
+                                               Margin="0, 15, 45, 0" FontFamily="FASolid" FontSize="20">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BindingContext.FavoriteArticle, Source={x:Reference ArticlesCollection}}" 
+                                                                      CommandParameter="{Binding .}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label Text="{Binding Creator}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" TextColor="White" FontAttributes="Bold"
+                                       Margin="15, 15, 0, 0"/>
+                                    </Grid>
+                                </Frame>
+                                <BoxView Color="Black" HeightRequest="2"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+            <forms:AnimationView x:Name="animationView" Animation="loading.json" 
+                                 AnimationSource="AssetOrBundle" VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand" HeightRequest="300" WidthRequest="300" RepeatMode="Infinite"
+                                 IsVisible="{Binding IsRefreshing}" TranslationY="0"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

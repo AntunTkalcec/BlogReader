@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "536859985027",
+    "project_id": "blogreaderfcm",
+    "storage_bucket": "blogreaderfcm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536859985027:android:13fd8444edaa7982d307b6",
+        "android_client_info": {
+          "package_name": "com.companyname.blogreader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536859985027-801jirdm01jq0efumc36qcb9hrrk3tgq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXDCT8daxQlFuwO1kxbVX_WVtO_lIMiSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536859985027-801jirdm01jq0efumc36qcb9hrrk3tgq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536859985027:android:fc504e08b4117e09d307b6",
+        "android_client_info": {
+          "package_name": "com.ekobit.ekoship.blogreader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536859985027-801jirdm01jq0efumc36qcb9hrrk3tgq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXDCT8daxQlFuwO1kxbVX_WVtO_lIMiSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536859985027-801jirdm01jq0efumc36qcb9hrrk3tgq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

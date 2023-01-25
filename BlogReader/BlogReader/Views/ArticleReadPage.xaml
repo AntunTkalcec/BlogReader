@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlogReader.Views.ArticleReadPage"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             NavigationPage.IconColor="Black"
+             BackgroundColor="White">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="{Binding Name}" FontFamily="Momcake" FontSize="Title" TextColor="Black"
+                   VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <ScrollView x:Name="view">
+            <Label Text="{Binding ContentHTML}" Margin="10" TextType="Html"/>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

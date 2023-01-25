@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/blogreader/databases/BlogReader",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:HangfireRemoteConnection"
+    },
+    "mssql2": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/blogreader/databases/BlogReader",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:RemoteConnection"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlogReader.Views.SetupPage" x:DataType="viewmodels:SetupPageViewModel" xmlns:viewmodels="clr-namespace:BlogReader.ViewModels"
+              BackgroundColor="White" NavigationPage.IconColor="Black"
+             xmlns:models="clr-namespace:BlogReader.Models" xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    <ContentPage.BindingContext>
+        <viewmodels:SetupPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="LightSkyBlue" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <xct:InvertedBoolConverter x:Key="InvertedBool"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{xct:Translate SetupPageSubtitle}" FontFamily="Momcake" FontSize="30" HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center" VerticalOptions="Start" TextColor="Black" Margin="0, 10, 0, 0"/>
+            <CollectionView ItemsSource="{Binding Blogs}" SelectionMode="Multiple" SelectedItems="{Binding SelectedBlogs, Mode=TwoWay}" x:Name="collectionView">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Blogs">
+                        <StackLayout>
+                            <Frame CornerRadius="15" BackgroundColor="White" WidthRequest="265" HeightRequest="60" VerticalOptions="Start" HorizontalOptions="Center"
+                                   Margin="5, 5, 5, 5" HasShadow="True" BorderColor="#C4C4C4">
+                                <StackLayout Orientation="Horizontal">
+                                    <Frame WidthRequest="90" VerticalOptions="Center" HorizontalOptions="Start" CornerRadius="15" IsClippedToBounds="True" Padding="0">
+                                        <Image Source="{Binding ImageUrl}" HorizontalOptions="Center" VerticalOptions="Start" Aspect="AspectFit" HeightRequest="90"/>
+                                    </Frame>
+                                    <Label Text="{Binding Name}" HorizontalOptions="Start" VerticalOptions="Start"/>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="{xct:Translate SetupPageNext}" Command="{Binding SaveBlogs}" IsVisible="{Binding IsRefreshing, Converter={StaticResource InvertedBool}}">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding SelectedBlogs.Count}" Value="0">
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button Text="{xct:Translate SetupPageDeleteBlogs}" Command="{Binding DeleteBlogs}" x:Name="DeleteBlogsButtonDEBUG" 
+                    IsVisible="{Binding IsRefreshing, Converter={StaticResource InvertedBool}}"/>
+            <forms:AnimationView x:Name="animationView" Animation="loading.json" 
+                                 AnimationSource="AssetOrBundle" VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand" HeightRequest="300" WidthRequest="300" RepeatMode="Infinite"
+                                 IsVisible="{Binding IsRefreshing}" TranslationY="-200"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlogReader.Views.SettingsPage"
+             xmlns:viewmodels="clr-namespace:BlogReader.ViewModels"
+             x:DataType="viewmodels:SettingsPageViewModel" BackgroundColor="White"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="{xct:Translate SettingsPageTitle}" FontFamily="Momcake" FontSize="Title" TextColor="Black"
+                   VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.BindingContext>
+        <viewmodels:SettingsPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Spacing="10">
+            <Button Text="{xct:Translate OfflineArticles}" Command="{Binding ShowOfflineArticles}" BackgroundColor="{StaticResource PrimaryColor}"/>
+            <Button Text="{xct:Translate SettingsPageButton}" Command="{Binding RepeatSetupButton}" BackgroundColor="{StaticResource PrimaryColor}"/>
+            <Button Text="{xct:Translate FavoriteArticles}" Command="{Binding OpenFavoriteArticles}" BackgroundColor="{StaticResource PrimaryColor}"/>
+            <Button Text="{xct:Translate AboutBlogReaderLabel}" Command="{Binding AboutPage}" BackgroundColor="{StaticResource PrimaryColor}"/>
+            <Button Text="{xct:Translate EnglishFrameLabel}" Command="{Binding ChangeToEng}" BackgroundColor="{StaticResource PrimaryColor}"/>
+            <Button Text="{xct:Translate CroatianFrameLabel}" Command="{Binding ChangeToCro}" BackgroundColor="{StaticResource PrimaryColor}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

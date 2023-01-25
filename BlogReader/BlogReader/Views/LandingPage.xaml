@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms" 
+             xmlns:viewmodels="clr-namespace:BlogReader.ViewModels" xmlns:sh="http://sharpnado.com"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="BlogReader.Views.LandingPage"
+             x:DataType="viewmodels:LandingPageViewModel" BackgroundColor="White"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <viewmodels:LandingPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid RowDefinitions="2*, *, *, Auto, Auto" ColumnDefinitions="Auto, *, *">
+            <forms:AnimationView x:Name="animationView" Animation="BlogReaderLogo1.json" 
+                                 AnimationSource="AssetOrBundle" VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="CenterAndExpand" HeightRequest="300" WidthRequest="300" RepeatMode="Infinite"
+                                 Scale="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
+            <Label Text="{xct:Translate LandingPageTitle}" TextColor="Black" FontSize="48" VerticalTextAlignment="Start"
+                   HorizontalTextAlignment="Center" FontFamily="Momcake" FontAttributes="Italic,Bold" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" 
+                   x:Name="LandingPageTitle"
+                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" TranslationY="700"/>
+            <sh:Shadows x:Name="BeginShadows" CornerRadius="30" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Scale="1.5"
+                        TranslationY="700" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+                <sh:Shadows.Shades>
+                    <sh:ImmutableShades>
+                        <sh:Shade BlurRadius="10" Opacity="0.5" Offset="10, 10" Color="Black"/>
+                        <sh:Shade BlurRadius="0" Opacity="0.75" Offset="3, 3" Color="{StaticResource Key=PrimaryColor}"/>
+                        <sh:Shade BlurRadius="2" Opacity="0.6" Offset="6, 6" Color="{StaticResource Key=PrimaryColor}"/>
+                    </sh:ImmutableShades>
+                </sh:Shadows.Shades>
+                <Button Text="{xct:Translate BeginButton}" TextColor="Black" BackgroundColor="{StaticResource Key=PrimaryColor}" VerticalOptions="StartAndExpand" 
+                        HorizontalOptions="CenterAndExpand" CornerRadius="25" FontAttributes="Bold"
+                    FontSize="32" FontFamily="Momcake" BorderColor="{StaticResource Key=PrimaryColor}" BorderWidth="1" Command="{Binding BeginClick}">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                            <GradientStop Color="White" Offset="0.1"/>
+                            <GradientStop Color="{StaticResource Key=PrimaryColor}" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </sh:Shadows>
+            <Label Text="&#xf05a;" FontFamily="FASolid" FontSize="28" TextColor="{StaticResource PrimaryColor}"
+                   VerticalOptions="End" HorizontalOptions="Start" Margin="12, 0, 0, 12" Grid.Row="4" Grid.Column="0" x:Name="AboutButton"
+                   TranslationX="700">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AboutIconClick}"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <StackLayout Orientation="Horizontal" x:Name="BottomStackLayout" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
+                         HorizontalOptions="End" Margin="0, 0, 0, 5" TranslationX="700">
+                <Frame CornerRadius="30" BackgroundColor="{StaticResource Key=SelectionColor}" HorizontalOptions="End" Scale="0.7" x:Name="EnglishFrame">
+                    <Label Text="{xct:Translate EnglishFrameLabel}" FontSize="16" TextColor="Black" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetLangEnglish}"/>
+                        <TapGestureRecognizer Tapped="EnglishFrameTapped"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <BoxView WidthRequest="1" Color="Black"/>
+                <Frame CornerRadius="30" BackgroundColor="{StaticResource Key=SelectionColor2}" HorizontalOptions="End" Scale="0.7" x:Name="CroatianFrame">
+                    <Label Text="{xct:Translate CroatianFrameLabel}" TextColor="Black" FontAttributes="Bold" FontSize="16"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetLangCroatian}"/>
+                        <TapGestureRecognizer Tapped="CroatianFrameTapped"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

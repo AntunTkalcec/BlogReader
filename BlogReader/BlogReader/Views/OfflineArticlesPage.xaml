@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlogReader.Views.OfflineArticlesPage"
+             NavigationPage.IconColor="Black"
+             xmlns:models="clr-namespace:BlogReader.Models"
+             x:DataType="viewmodels:OfflineArticlesPageViewModel" xmlns:viewmodels="clr-namespace:BlogReader.ViewModels" BackgroundColor="White"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="{xct:Translate ArticlesPageTitle}" FontFamily="Momcake" FontSize="Title" TextColor="Black"
+                   VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.BindingContext>
+        <viewmodels:OfflineArticlesPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <CollectionView ItemsSource="{Binding Articles}" x:Name="ArticlesCollection" SelectionMode="Single" VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="CenterAndExpand">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Articles">
+                        <StackLayout>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.ReadArticle, Source={x:Reference ArticlesCollection}}" CommandParameter="{Binding .}"/>
+                            </StackLayout.GestureRecognizers>
+                            <Frame HeightRequest="280" BackgroundColor="White" Padding="0" HasShadow="True" Margin="10" CornerRadius="30" 
+                                   HorizontalOptions="CenterAndExpand">
+                                <Grid>
+                                    <StackLayout BackgroundColor="Black">
+                                        <Image Source="{Binding ImageURL}" HeightRequest="350" Opacity="0.65" Aspect="AspectFill"/>
+                                    </StackLayout>
+                                    <StackLayout>
+                                        <Label Text="{Binding Name}" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="15" VerticalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                    <Label Text="&#xf2ed;" HorizontalOptions="EndAndExpand" 
+                                               VerticalOptions="StartAndExpand" TextColor="White" FontAttributes="Bold"
+                                               Margin="0, 15, 15, 0" FontFamily="FASolid" FontSize="20">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.DeleteArticle, Source={x:Reference ArticlesCollection}}" 
+                                                                      CommandParameter="{Binding .}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label Text="{Binding Creator}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" TextColor="White" FontAttributes="Bold"
+                                       Margin="15, 15, 0, 0"/>
+                                </Grid>
+                            </Frame>
+                            <BoxView Color="Black" HeightRequest="2"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <ContentView>
+                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                            <Label Text="{xct:Translate NullArticles}" HorizontalOptions="Fill" HorizontalTextAlignment="Center"/>
+                        </StackLayout>
+                    </ContentView>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
